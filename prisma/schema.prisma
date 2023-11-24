@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Rider {
+  id String @id @default(uuid())
+  name String
+  surname String
+  age Int
+  date_of_birth DateTime
+  place_of_birth String
+  nationality_id String
+  nationality Nationality @relation(fields: [nationality_id], references: [id])
+  grand_prix GrandPrix[]
+  current_teams Team[]
+}
+
+model Nationality {
+  id String @id @default(uuid())
+  country_code String
+  country_name String
+  country_flag String
+  riders Rider[]
+}
+
+model GrandPrix {
+  id String @id @default(uuid())
+  current_rider Boolean
+  gp_number String
+  gp_wins Int
+  gp_podiums Int
+  rider_id String
+  rider Rider @relation(fields: [rider_id], references: [id])
+}
+
+model Team {
+  id String @id @default(uuid())
+  league_name String
+  team_name String
+  team_logo String
+  rider_id String
+  rider Rider @relation(fields: [rider_id], references: [id])
+}

@@ -1,0 +1,5 @@
+{
+    "port": "9595",
+    "origin": "http://localhost:9595",
+    "node_env": "development"
+}
